@@ -1,10 +1,10 @@
 import { registerDecorator, ValidationArguments, ValidationOptions } from 'class-validator';
 import DB from '../services/db/db';
 
-export default function IsGenreArray(validationOptions?: ValidationOptions) {
+export default function IsArrayOfGenres(validationOptions?: ValidationOptions) {
   return (object: Object, propertyName: string) => {
     registerDecorator({
-      name: 'isGenreArray',
+      name: 'isArrayOfGenres',
       target: object.constructor,
       propertyName,
       options: validationOptions,

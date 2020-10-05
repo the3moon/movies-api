@@ -10,7 +10,7 @@ const moviesController = {
     const movies = await moviesService.getMatchingMovies({
       duration: typeof req.query.duration === 'string' ? parseInt(req.query.duration, 10) : undefined,
       // @ts-ignore
-      genres: Array.isArray(req.query.genres) ? req.query.genres : undefined,
+      genres: req.query.genres,
     });
     res.send(movies);
   },

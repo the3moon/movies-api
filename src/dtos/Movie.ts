@@ -1,7 +1,7 @@
 import {
   ArrayNotEmpty, IsInt, IsOptional, IsString, IsUrl, MaxLength, Min,
 } from 'class-validator';
-import IsGenreArray from '../validators/IsGenreArray';
+import IsArrayOfGenres from '../validators/IsArrayOfGenres';
 
 export interface Movie {
     id: number;
@@ -17,7 +17,7 @@ export interface Movie {
 
 export class StoreMovieDto {
     @ArrayNotEmpty()
-    @IsGenreArray()
+    @IsArrayOfGenres()
     genres: string[] ;
 
     @IsString()

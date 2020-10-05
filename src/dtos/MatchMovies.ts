@@ -2,7 +2,7 @@ import {
   ArrayNotEmpty,
   IsInt, IsOptional, Min,
 } from 'class-validator';
-import IsGenreArray from '../validators/IsGenreArray';
+import IsArrayOfGenres from '../validators/IsArrayOfGenres';
 
 export default class MatchMoviesDto {
     @IsOptional()
@@ -12,6 +12,6 @@ export default class MatchMoviesDto {
 
     @IsOptional()
     @ArrayNotEmpty()
-    @IsGenreArray()
+    @IsArrayOfGenres()
     genres?: string[] ;
 }

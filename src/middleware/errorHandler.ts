@@ -36,7 +36,7 @@ export const errorHandler = (
   res: Response,
   next: NextFunction,
 ): void => {
-  const statusCode = err.status || 500;
+  const statusCode = err.status || StatusCode.INTERNAL_SERVER_ERROR;
   res.status(statusCode);
   res.send({ message: err.message, code: statusCode });
 };
