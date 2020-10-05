@@ -1,13 +1,42 @@
-## The Software House - Node.js Developer recruitment task
+# Movies-api
 
-Hey there!
+## Description
 
-Not so long ago we decided create a catalogue of our favourite movies (data/db.json) as json. It is hard to update, so we would like to build an API
-for it, however we don't need a database, we still need it as a file.
+Api used to store movies in a file and querry from it based on genres and duration
 
-### TODOS
+## Instalation
 
-1. We need to be able to add a new movie. Each movie should contain information about:
+```bash
+yarn install
+```
+
+## Build
+
+```bash
+yarn build
+```
+
+## Development
+
+```bash
+yarn start
+```
+
+## Test
+
+```bash
+yarn test
+```
+
+## Endpoints
+
+### Store Movies
+
+```
+POST api/movies
+```
+
+Body params:
 
 - a list of genres (only predefined ones from db file) (required, array of predefined strings)
 - title (required, string, max 255 characters)
@@ -18,30 +47,21 @@ for it, however we don't need a database, we still need it as a file.
 - plot (optional, string)
 - posterUrl (optional, string)
 
-Each field should be properly validated and meaningful error message should be return in case of invalid value.
+---
 
-2. We also need an endpoint to return a random matching movie for us. What we want to do is to send a list of genres (this parameter is optional) and a duration of a movie we are looking for.
+### Query movies
 
-The special algorithm should first find all the movies that have all genres of our choice and runtime between <duration - 10> and <duration + 10>. Then it should repeat this algorithm for each genres combination. For example:
+```
+GET api/movies
+```
 
-If we send a request with genres [Comedy, Fantasy, Crime] then the top hits should be movies that have all three of them, then there should be movies that have one of [Comedy, Fantasy], [comedy, crime], [Fantasy, Crime] and then those with Comedy only, Fantasy only and Crime only.
+This is used to query movies from file
 
-Of course we dont want to have duplicates.
+Query Params:
 
-If we dont provide genres parameter then we get a single random movie with a runtime between <duration - 10> and <duration + 10>.
+- duration (optional, number)
+- a list of genres (only predefined ones from db file) (optional, array of predefined strings)
 
-If we dont provide duration parameter then we should get all of the movie with specific genres.
+## Info
 
-If we dont provide any parameter, then we should get a single random movie.
-
-### Rules
-
-**Use express.js**
-
-**Keep code clean**
-
-**The algorithm should be unit tested**
-
-**Remember about proper error handling**
-
-**We require code in git repository**
+`db.json` file is located in _data_ folder
