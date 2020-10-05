@@ -41,14 +41,23 @@ const DB = {
   },
   get movies() {
     if (!initialized) throw new Error('DB was not initialized');
-    return [...data.movies];
+    return data.movies.map((m) => ({
+      ...m,
+      // @ts-ignore
+      year: parseInt(m.year, 10),
+      // @ts-ignore
+      runtime: parseInt(m.runtime, 10),
+    }));
   },
   async addMovie(validMovie:StoreMovieDto):Promise<Movie> {
     if (!initialized) throw new Error('DB was not initialized');
     lastMovieId += 1;
-    const newMovie = { ...validMovie, id: lastMovieId };
-    data.movies.push(newMovie);
+    const newMovie = {
+      ...validMovie, id: lastMovieId, runtime: `${validMovie.runtime}`, year: `${validMovie.year}`,
+    };
+    data.movies.push(newMovie as any);
     await this.save();
+    // @ts-ignore
     return newMovie;
   },
 };

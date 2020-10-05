@@ -18,11 +18,16 @@ export const validationErrorHandler = (
   res: Response,
   next: NextFunction,
 ): void => {
-  if (!(err[0] instanceof ValidationError)) {
+  if (!Array.isArray(err) || !(err[0] instanceof ValidationError)) {
     next(err);
   }
+
   res.status(StatusCode.BAD_REQUEST);
-  res.send({ message: 'Validation Failed', code: StatusCode.BAD_REQUEST, errors: err });
+  res.send({
+    message: 'Validation Failed',
+    code: StatusCode.BAD_REQUEST,
+    errors: err.map((e) => ({ property: e.property, constraints: e.constraints })),
+  });
 };
 
 export const errorHandler = (
