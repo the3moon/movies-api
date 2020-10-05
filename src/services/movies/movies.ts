@@ -2,11 +2,6 @@ import { validateOrReject } from 'class-validator';
 import { Movie, StoreMovieDto } from '../../dtos/Movie';
 import DB from '../db/db';
 
-async function validateMovie(movie: StoreMovieDto) {
-  const obj = Object.assign(new StoreMovieDto(), movie);
-  await validateOrReject(obj);
-}
-
 const moviesService = {
   getGenres() {
     return DB.genres;
@@ -18,10 +13,24 @@ const moviesService = {
     const movie = DB.movies.find((m) => m.id === movieId);
     return movie;
   },
-  async storeMovie(movieDto: StoreMovieDto): Promise<Movie> {
-    await validateMovie(movieDto);
+  async storeMovie(movie: StoreMovieDto): Promise<Movie> {
+    const movieDto = new StoreMovieDto();
+    movieDto.genres = movie.genres;
+    movieDto.title = movie.title;
+    movieDto.year = movie.year;
+    movieDto.runtime = movie.runtime;
+    movieDto.director = movie.director;
+
+    movieDto.actors = movie.actors;
+    movieDto.plot = movie.plot;
+    movieDto.posterUrl = movie.posterUrl;
+
+    await this.validateMovie(movieDto);
     const newMovie = await DB.addMovie(movieDto);
     return newMovie;
+  },
+  async validateMovie(movieDto: StoreMovieDto) {
+    await validateOrReject(movieDto);
   },
 
 };

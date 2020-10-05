@@ -1,11 +1,11 @@
 import {
-  IsArray, IsEnum, IsInt, IsNotEmpty, IsString, MaxLength,
+  IsArray, IsInt, IsOptional, IsString, IsUrl, MaxLength,
 } from 'class-validator';
-import Genre from './Genre';
+import IsGenreArray from '../validators/IsGenreArray';
 
 export interface Movie {
     id: number;
-    genres: Genre[] ;
+    genres: string[] ;
     title: string ;
     year: number ;
     runtime: number ;
@@ -16,35 +16,33 @@ export interface Movie {
 }
 
 export class StoreMovieDto {
-    @IsNotEmpty()
     @IsArray()
-    @IsEnum(Genre)
-    genres!: Genre[] ;
+    @IsGenreArray()
+    genres: string[] ;
 
-    @IsNotEmpty()
     @IsString()
     @MaxLength(255)
-    title!: string ;
+    title: string ;
 
-    @IsNotEmpty()
     @IsInt()
-    year!: number ;
+    year: number ;
 
-    @IsNotEmpty()
     @IsInt()
-    runtime!: number ;
+    runtime: number ;
 
-    @IsNotEmpty()
     @IsString()
     @MaxLength(255)
-    director!: string ;
+    director: string ;
 
+    @IsOptional()
     @IsString()
     actors?: string ;
 
+    @IsOptional()
     @IsString()
     plot?: string ;
 
-    @IsString()
+    @IsOptional()
+    @IsUrl()
     posterUrl?: string ;
 }

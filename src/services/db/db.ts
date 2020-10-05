@@ -1,13 +1,12 @@
 import { readFile, writeFile } from 'fs';
 import { join } from 'path';
-import Genre from '../../dtos/Genre';
 import { Movie, StoreMovieDto } from '../../dtos/Movie';
 
 const dataLocation = '../../../data/db.json';
 const dataPath = join(__dirname, dataLocation);
 
 let data:{
-  genres: Genre[],
+  genres: string[],
   movies: Movie[]
 };
 let initialized = false;
@@ -37,12 +36,15 @@ const DB = {
     initialized = true;
   },
   get genres() {
+    if (!initialized) throw new Error('DB was not initialized');
     return [...data.genres];
   },
   get movies() {
+    if (!initialized) throw new Error('DB was not initialized');
     return [...data.movies];
   },
   async addMovie(validMovie:StoreMovieDto):Promise<Movie> {
+    if (!initialized) throw new Error('DB was not initialized');
     lastMovieId += 1;
     const newMovie = { ...validMovie, id: lastMovieId };
     data.movies.push(newMovie);
